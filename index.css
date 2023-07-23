@@ -1,0 +1,9 @@
+.video {
+    background-color: darkgray;
+    width: 100%;
+}
+
+#create-offer{
+    width: max-content;
+    margin-bottom: 8px;
+}
