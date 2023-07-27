@@ -10,8 +10,15 @@ let servers = {
     ]
 }
 
-async function init() {
-    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+let audio = true;
+let video = true;
+
+async function init(video, audio) {
+    if (video || audio) {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: video, audio: audio });
+    } else {
+        localStream = new MediaStream();
+    }
     document.getElementById("user-1").srcObject = localStream;
 }
 
@@ -21,12 +28,18 @@ let createPeerConnection = (sdpType) => {
     remoteStream = new MediaStream();
     document.getElementById("user-2").srcObject = remoteStream;
 
-    localStream.getTracks().forEach((track) => {
+    localStream.getVideoTracks().forEach((track) => {
+        peerConnection.addTrack(track, localStream);
+    });
+    localStream.getAudioTracks().forEach((track) => {
         peerConnection.addTrack(track, localStream);
     });
 
     peerConnection.ontrack = (event) => {
-        event.streams[0].getTracks().forEach((track) => {
+        event.streams[0].getVideoTracks().forEach((track) => {
+            remoteStream.addTrack(track);
+        })
+        event.streams[0].getAudioTracks().forEach((track) => {
             remoteStream.addTrack(track);
         })
     }
@@ -73,7 +86,23 @@ let addAnswer = async () => {
     }
 }
 
-init();
+function stopSendingTracks() {
+    peerConnection.removeTrack(localStream.getTracks()[0], localStream);
+    localStream.getTracks()[0].stop();
+}
+
+init(video, audio);
+document.getElementById("audio-btn").addEventListener("click", () => {
+    audio = !audio;
+    document.getElementById("audio-btn").textContent = audio ? "Disable" : "Enable";
+    init(video, audio);
+});
+document.getElementById("video-btn").addEventListener("click", () => {
+    video = !video;
+    document.getElementById("video-btn").textContent = video ? "Disable" : "Enable";
+    init(video, audio);
+    // stopSendingTracks();
+});
 
 document.getElementById('create-offer').addEventListener('click', createOffer);
 document.getElementById('create-answer').addEventListener('click', createAnswer);

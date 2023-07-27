@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
     <div style="display: flex; flex-direction: column; min-height: 100vh; padding: 32px;">
-        <div style="display: flex; gap: 2rem; justify-content: center; max-height: 300px;">
-            <video class="video" id="user-1" autoplay playsinline></video>
-            <video class="video" id="user-2" autoplay playsinline></video>
+        <div style="display: flex; gap: 2rem; justify-content: center;">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <video class="video" id="user-1" autoplay playsinline muted></video>
+                <!-- <div style="width: 100%; display: flex; justify-content: center; gap: 2rem;">
+                    <div style="display: flex; gap: 1rem;">
+                        <span>Audio:</span>
+                        <button id="audio-btn">Disable</button>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <span>Video:</span>
+                        <button id="video-btn">Disable</button>
+                    </div>
+                </div> -->
+            </div>
+            <div>
+                <video class="video" id="user-2" autoplay playsinline></video>
+                <!-- <div style="width: 100%; display: flex; justify-content: center;">
+                    <button>Audio</button>
+                    <button>Video</button>
+                </div> -->
+            </div>
         </div>
 
         <div style="display: flex; flex-direction: column; padding: 16px 0px 16px 0px;">
@@ -29,4 +49,5 @@
 
     <script src="./index.js"></script>
 </body>
+
 </html>
