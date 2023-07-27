@@ -86,23 +86,23 @@ let addAnswer = async () => {
     }
 }
 
-function stopSendingTracks() {
-    peerConnection.removeTrack(localStream.getTracks()[0], localStream);
-    localStream.getTracks()[0].stop();
-}
+// function stopSendingTracks() {
+//     peerConnection.removeTrack(localStream.getTracks()[0], localStream);
+//     localStream.getTracks()[0].stop();
+// }
 
 init(video, audio);
-document.getElementById("audio-btn").addEventListener("click", () => {
-    audio = !audio;
-    document.getElementById("audio-btn").textContent = audio ? "Disable" : "Enable";
-    init(video, audio);
-});
-document.getElementById("video-btn").addEventListener("click", () => {
-    video = !video;
-    document.getElementById("video-btn").textContent = video ? "Disable" : "Enable";
-    init(video, audio);
-    // stopSendingTracks();
-});
+// document.getElementById("audio-btn").addEventListener("click", () => {
+//     audio = !audio;
+//     document.getElementById("audio-btn").textContent = audio ? "Disable" : "Enable";
+//     init(video, audio);
+// });
+// document.getElementById("video-btn").addEventListener("click", () => {
+//     video = !video;
+//     document.getElementById("video-btn").textContent = video ? "Disable" : "Enable";
+//     init(video, audio);
+//     // stopSendingTracks();
+// });
 
 document.getElementById('create-offer').addEventListener('click', createOffer);
 document.getElementById('create-answer').addEventListener('click', createAnswer);
