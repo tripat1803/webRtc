@@ -1,6 +1,8 @@
 let localStream;
 let remoteStream;
 let peerConnection;
+let videoTrack;
+let audioTrack;
 
 let servers = {
     iceServers: [
@@ -29,10 +31,10 @@ let createPeerConnection = (sdpType) => {
     document.getElementById("user-2").srcObject = remoteStream;
 
     localStream.getVideoTracks().forEach((track) => {
-        peerConnection.addTrack(track, localStream);
+        videoTrack = peerConnection.addTrack(track, localStream);
     });
     localStream.getAudioTracks().forEach((track) => {
-        peerConnection.addTrack(track, localStream);
+        audioTrack = peerConnection.addTrack(track, localStream);
     });
 
     peerConnection.ontrack = (event) => {
@@ -86,24 +88,43 @@ let addAnswer = async () => {
     }
 }
 
-// function stopSendingTracks() {
-//     peerConnection.removeTrack(localStream.getTracks()[0], localStream);
-//     localStream.getTracks()[0].stop();
-// }
+function toggleAudioTracks(audio) {
+    if(audio){
+        localStream.getAudioTracks().forEach((track) => {
+            audioTrack = peerConnection.addTrack(track, localStream);
+        });
+    } else {
+        peerConnection.removeTrack(audioTrack);
+    }
+}
+
+function toggleVideoTracks(video) {
+    if(video){
+        localStream.getVideoTracks().forEach((track) => {
+            videoTrack = peerConnection.addTrack(track, localStream);
+        });
+    } else {
+        peerConnection.removeTrack(videoTrack);
+    }
+}
 
 init(video, audio);
-// document.getElementById("audio-btn").addEventListener("click", () => {
-//     audio = !audio;
-//     document.getElementById("audio-btn").textContent = audio ? "Disable" : "Enable";
-//     init(video, audio);
-// });
-// document.getElementById("video-btn").addEventListener("click", () => {
-//     video = !video;
-//     document.getElementById("video-btn").textContent = video ? "Disable" : "Enable";
-//     init(video, audio);
-//     // stopSendingTracks();
-// });
+document.getElementById("audio-btn").addEventListener("click", () => {
+    audio = !audio;
+    document.getElementById("audio-btn").textContent = audio ? "Disable" : "Enable";
+    init(video, audio);
+    toggleAudioTracks(audio);
+});
+document.getElementById("video-btn").addEventListener("click", () => {
+    video = !video;
+    document.getElementById("video-btn").textContent = video ? "Disable" : "Enable";
+    init(video, audio);
+    toggleVideoTracks(video);
+});
 
 document.getElementById('create-offer').addEventListener('click', createOffer);
 document.getElementById('create-answer').addEventListener('click', createAnswer);
 document.getElementById('add-answer').addEventListener('click', addAnswer);
+document.getElementById('end-call').addEventListener('click', () => {
+    peerConnection.close();
+});

@@ -13,7 +13,7 @@
         <div style="display: flex; gap: 2rem; justify-content: center;">
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 <video class="video" id="user-1" autoplay playsinline muted></video>
-                <!-- <div style="width: 100%; display: flex; justify-content: center; gap: 2rem;">
+                <div style="width: 100%; display: flex; justify-content: center; gap: 2rem;">
                     <div style="display: flex; gap: 1rem;">
                         <span>Audio:</span>
                         <button id="audio-btn">Disable</button>
@@ -22,7 +22,7 @@
                         <span>Video:</span>
                         <button id="video-btn">Disable</button>
                     </div>
-                </div> -->
+                </div>
             </div>
             <div>
                 <video class="video" id="user-2" autoplay playsinline></video>
@@ -38,12 +38,16 @@
             <textarea id="offer-sdp" cols=""></textarea>
         </div>
 
-        <div style="display: flex; flex-direction: column;">
+        <div style="display: flex; flex-direction: column; padding: 0px 0px 16px 0px;">
             <div style="margin-bottom: 8px;">
                 <button id="create-answer">Create Response</button>
                 <button id="add-answer">Add Response</button>
             </div>
             <textarea id="answer-sdp"></textarea>
+        </div>
+        
+        <div>
+            <button id="end-call">End Call</button>
         </div>
     </div>
 
